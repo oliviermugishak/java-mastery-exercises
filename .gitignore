@@ -1,0 +1,55 @@
+# Maven target directory
+/target/
+
+# Eclipse IDE files
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA files
+*.iml
+.idea/
+out/
+
+# NetBeans files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# VS Code files
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Coverage reports
+/coverage/
+*.exec
+
+# Dependency directories (optional, if using local repo)
+/.mvn/
