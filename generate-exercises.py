@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Robust generator for Java Mastery exercises from exercises.yml
 
