@@ -1,0 +1,982 @@
+# exercises.yml - 100 Java Mastery exercises (concept-focused)
+# Fields: id, title, type, difficulty, description, topics
+# For code tasks add: entry_class, method_signature, test_cases
+
+- id: "01"
+  title: "Project Structure & Maven Basics"
+  type: "env"
+  difficulty: "Easy"
+  topics: ["tooling", "maven"]
+  description: |
+    Create a multi-module Maven skeleton: root aggregator, two modules (library and app).
+    App depends on library; produce jar for library and runnable jar for app.
+- id: "02"
+  title: "Hello Modules (JPMS) and module-info"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["module-system", "jpms"]
+  description: |
+    Create two modules: `api` and `consumer`. Export the API package and have consumer use it.
+  entry_class: "jpms.Api"
+  method_signature: "String greet(String name)"
+  test_cases:
+    - args: ["Olivier"]
+      expected: "Hello Olivier"
+- id: "03"
+  title: "Packages & Access Modifiers"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["language", "access"]
+  description: |
+    Demonstrate private, package-private, protected, public behavior across packages.
+  entry_class: "access.VisibilityDemo"
+  method_signature: "String accessibleFrom(String packageName)"
+  test_cases:
+    - args: ["api"]
+      expected: "allowed"
+- id: "04"
+  title: "Custom ClassLoader"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["classloading", "jvm"]
+  description: |
+    Implement a ClassLoader that loads classes from a directory and demonstrates loading the same class twice.
+  entry_class: "cl.CustomLoaderDemo"
+  method_signature: "boolean distinctClassIdentities(String dir)"
+  test_cases:
+    - args: ["./sample-versions"]
+      expected: true
+- id: "05"
+  title: "Generics: Generic Box and Wildcards"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["generics", "type-erasure"]
+  description: |
+    Implement Box<T>, and methods that accept `List<? extends T>` and `List<? super T>` demonstrating covariance/contravariance.
+  entry_class: "gen.BoxUtils"
+  method_signature: "int sumInts(List<Integer> list)"
+  test_cases:
+    - args: [[1, 2, 3]]
+      expected: 6
+- id: "06"
+  title: "Type Erasure Pitfalls"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["generics", "type-erasure"]
+  description: |
+    Write a short report showing runtime consequences of type erasure and propose code patterns to avoid them.
+- id: "07"
+  title: "Arrays vs Generics"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["arrays", "generics"]
+  description: |
+    Demonstrate why `new T[]` is illegal and how to safely create arrays of generics using `Array.newInstance`.
+  entry_class: "arrays.GenericArrays"
+  method_signature: "String[] makeStringArray(int n)"
+  test_cases:
+    - args: [3]
+      expected: ["", "", ""]
+- id: "08"
+  title: "Collections Framework Deep Dive"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["collections"]
+  description: |
+    Create examples showing differences HashMap vs TreeMap vs LinkedHashMap; analyze ordering and complexity.
+- id: "09"
+  title: "Implement a Simple HashMap"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["hashmap", "ds"]
+  description: |
+    Implement a simplified HashMap with put/get/remove and auto-resize.
+  entry_class: "ds.SimpleHashMap"
+  method_signature: "int sizeAfterOperations(String[] keys, String[] values)"
+  test_cases:
+    - args: [["a", "b", "c"], ["1", "2", "3"]]
+      expected: 3
+- id: "10"
+  title: "Equals & hashCode Contract"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["objects", "hashcode"]
+  description: |
+    Implement a value class with correct equals/hashCode, and show failing cases if contract violated.
+  entry_class: "obj.Person"
+  method_signature: "boolean equalByFields(String a, String b)"
+  test_cases:
+    - args: ["x", "x"]
+      expected: true
+- id: "11"
+  title: "Immutable Types & Builders"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["immutability", "design"]
+  description: |
+    Design an immutable `Address` class with builder; ensure defensive copies for mutable fields.
+  entry_class: "imm.Address"
+  method_signature: "String combined(Address a)"
+  test_cases:
+    - args: [{ "street": "x", "city": "y" }]
+      expected: "x,y"
+- id: "12"
+  title: "Serialization: Serializable / serialVersionUID"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["serialization"]
+  description: |
+    Serialize an object, change the class (add a field), demonstrate how serialVersionUID ensures compatibility.
+  entry_class: "ser.SerializationDemo"
+  method_signature: "boolean deserializeOld(byte[] bytes)"
+  test_cases:
+    - args: [[]]
+      expected: false
+- id: "13"
+  title: "Externalizable and Custom Serialization"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["serialization"]
+  description: |
+    Implement `Externalizable` for a class with custom readExternal/writeExternal logic.
+  entry_class: "ser.CustomExternal"
+  method_signature: "byte[] serializeThenRead(String data)"
+  test_cases:
+    - args: ["hello"]
+      expected: '"hello".getBytes()'
+- id: "14"
+  title: "Transient Fields & Security"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["serialization", "security"]
+  description: |
+    Write an analysis and short demo explaining why passwords should be transient and how to handle them securely.
+- id: "15"
+  title: "Reflection: Access Private Members"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["reflection"]
+  description: |
+    Use reflection to access private fields/methods and set values. Compare performance to normal call.
+  entry_class: "reflect.PrivateAccess"
+  method_signature: "String callPrivateMethod(String in)"
+  test_cases:
+    - args: ["s"]
+      expected: "S"
+- id: "16"
+  title: "MethodHandles vs Reflection"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["methodhandles", "reflection"]
+  description: |
+    Use MethodHandle to call methods and compare to reflection for speed and flexibility.
+  entry_class: "reflect.MethodHandleDemo"
+  method_signature: "boolean handlesInvoke(String input)"
+  test_cases:
+    - args: ["x"]
+      expected: true
+- id: "17"
+  title: "Annotation Processing (APT)"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["annotation-processing", "codegen"]
+  description: |
+    Write an annotation processor that generates a `toString()` method for classes annotated with `@AutoToString`.
+  entry_class: "apt.AutoToStringDemo"
+  method_signature: "boolean processorGenerated()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "18"
+  title: "Custom Annotation & Retention Policy"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["annotations"]
+  description: |
+    Create runtime annotations and reflectively inspect them at runtime.
+  entry_class: "annot.Inspect"
+  method_signature: "boolean hasAnnotation(String className)"
+  test_cases:
+    - args: ["annot.SomeAnnotated"]
+      expected: true
+- id: "19"
+  title: "Streams API: Build a Custom Collector"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["streams", "functional"]
+  description: |
+    Implement a custom `Collector` that groups strings by length and concatenates with a delimiter.
+  entry_class: "streams.CustomCollectors"
+  method_signature: "Map<Integer,String> groupAndJoin(String[] input)"
+  test_cases:
+    - args: [["a", "bb", "c"]]
+      expected: { 1:"a, c", 2:"bb" }
+- id: "20"
+  title: "Functional Interfaces & Closures"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["lambda", "functional"]
+  description: |
+    Demonstrate lambda capturing effectively final variables and how stateful lambdas behave.
+  entry_class: "lambda.CaptureDemo"
+  method_signature: "int applyAndSum(int[] arr)"
+  test_cases:
+    - args: [[1, 2, 3]]
+      expected: 6
+- id: "21"
+  title: "Optional Usage & Anti-Patterns"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["optional", "api-design"]
+  description: |
+    Provide examples of correct Optional usage and anti-patterns (fields, collections, streams).
+- id: "22"
+  title: "Exceptions: Checked vs Unchecked"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["exceptions"]
+  description: |
+    Build APIs that expose checked exceptions and alternatives (wrapping, functional patterns).
+  entry_class: "ex.ExampleExceptions"
+  method_signature: "String safeCall(boolean fail)"
+  test_cases:
+    - args: [false]
+      expected: "ok"
+    - args: [true]
+      expected: "error"
+- id: "23"
+  title: "Try-with-resources & AutoCloseable"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["io", "resource-management"]
+  description: |
+    Implement a resource class that implements AutoCloseable and demonstrate correct behavior.
+  entry_class: "io.AutoCloseDemo"
+  method_signature: "boolean closedAfterTry()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "24"
+  title: "NIO.2 File API & WatchService"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["nio", "io"]
+  description: |
+    Implement a file watcher that reports creation of files in a directory.
+  entry_class: "nio.FileWatcher"
+  method_signature: "boolean detectsCreation(String dir)"
+  test_cases:
+    - args: ["./tmp"]
+      expected: true
+- id: "25"
+  title: "Non-blocking Sockets with Selector"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["nio", "network"]
+  description: |
+    Build a non-blocking echo server using Selector and SocketChannel.
+  entry_class: "net.NioEcho"
+  method_signature: "boolean echoes(String message)"
+  test_cases:
+    - args: ["hello"]
+      expected: true
+- id: "26"
+  title: "Blocking IO Server with Thread Pool"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["io", "concurrency"]
+  description: |
+    Build a socket server using a fixed thread pool to serve client requests concurrently.
+  entry_class: "net.ThreadPoolEcho"
+  method_signature: "int concurrentResponses(int clients)"
+  test_cases:
+    - args: [3]
+      expected: 3
+- id: "27"
+  title: "ExecutorService, CompletionService, and Future"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "executors"]
+  description: |
+    Use ExecutorService and CompletionService to submit tasks and gather results as they complete.
+  entry_class: "concurrency.ExecDemo"
+  method_signature: "int sumResults(int[] inputs)"
+  test_cases:
+    - args: [[1, 2, 3]]
+      expected: 6
+- id: "28"
+  title: "CompletableFuture Composition"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "async"]
+  description: |
+    Chain CompletableFutures and handle exceptions; show supplyAsync, thenApply, thenCompose.
+  entry_class: "concurrency.CFCompose"
+  method_signature: "String composeAsync(String a, String b)"
+  test_cases:
+    - args: ["x", "y"]
+      expected: "xy"
+- id: "29"
+  title: "Design & Implement a Thread Pool (Simplified)"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["concurrency", "thread-pool"]
+  description: |
+    Implement a basic thread pool with task queue, worker threads, and shutdown semantics.
+  entry_class: "concurrency.SimpleThreadPool"
+  method_signature: "int completedTasks(int tasks, int threads)"
+  test_cases:
+    - args: [10, 2]
+      expected: 10
+- id: "30"
+  title: "Deadlocks & Detection"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "debugging"]
+  description: |
+    Create a deliberate deadlock and implement a detection method using ThreadMXBean.
+  entry_class: "concurrency.DeadlockDemo"
+  method_signature: "boolean detectDeadlock()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "31"
+  title: "Volatile, Happens-Before & Visibility"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["memory-model", "concurrency"]
+  description: |
+    Create demonstrations and a writeup showing how volatile affects visibility and ordering.
+- id: "32"
+  title: "Atomic Variables & CAS"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "atomics"]
+  description: |
+    Use AtomicInteger to increment counters safely under concurrency and compare to synchronized.
+  entry_class: "concurrency.AtomicDemo"
+  method_signature: "int atomicCount(int threads, int increments)"
+  test_cases:
+    - args: [4, 1000]
+      expected: 4000
+- id: "33"
+  title: "Locks: ReentrantLock & Condition"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "locks"]
+  description: |
+    Implement producer-consumer using ReentrantLock and Condition variables.
+  entry_class: "concurrency.LockCondition"
+  method_signature: "int producedConsumed(int n)"
+  test_cases:
+    - args: [100]
+      expected: 100
+- id: "34"
+  title: "ReadWriteLock & StampedLock"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["concurrency", "locks"]
+  description: |
+    Compare ReadWriteLock and StampedLock with microbenchmarks and a writeup.
+- id: "35"
+  title: "ForkJoinPool & RecursiveTask"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["concurrency", "forkjoin"]
+  description: |
+    Implement parallel sum using ForkJoinPool and RecursiveTask.
+  entry_class: "concurrency.ParallelSum"
+  method_signature: "long parallelSum(int[] arr)"
+  test_cases:
+    - args: [[1, 2, 3, 4]]
+      expected: 10
+- id: "36"
+  title: "ThreadLocal Usage & Pitfalls"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["concurrency", "threadlocal"]
+  description: |
+    Demonstrate ThreadLocal usage in thread pools and memory leak pitfalls when ThreadLocal used with thread pools.
+- id: "37"
+  title: "Concurrency Testing Techniques"
+  type: "essay"
+  difficulty: "Medium"
+  topics: ["testing", "concurrency"]
+  description: |
+    Write a short essay and provide test harness examples for reproducible concurrency tests (junit + stress).
+- id: "38"
+  title: "JMM: Reordering and Atomicity"
+  type: "design"
+  difficulty: "Hard"
+  topics: ["memory-model"]
+  description: |
+    Demonstrate cases of reordering, lost updates, and atomicity issues with multithreaded examples.
+- id: "39"
+  title: "JVM Internals: Classfile Structure"
+  type: "design"
+  difficulty: "Hard"
+  topics: ["jvm", "bytecode"]
+  description: |
+    Inspect a compiled `.class` file with `javap -v` and explain major sections (constant pool, methods, attributes).
+- id: "40"
+  title: "Bytecode Manipulation with ASM"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["bytecode", "asm"]
+  description: |
+    Use ASM to generate a small class at runtime or instrument method entry logging.
+  entry_class: "asm.AsmGen"
+  method_signature: "boolean generateClass(String className)"
+  test_cases:
+    - args: ["com.example.Gen"]
+      expected: true
+- id: "41"
+  title: "Java Agents & Instrumentation API"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["agents", "instrumentation"]
+  description: |
+    Write a premain agent that instruments a method to count invocations using bytecode instrumentation.
+  entry_class: "agent.AgentDemo"
+  method_signature: "boolean agentCounts()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "42"
+  title: "JVM Tooling: jmap, jstack, jcmd, jinfo"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["jvm", "debugging"]
+  description: |
+    Create instructions and scripts showing how to capture heap dump, thread dump, and JVM flags.
+- id: "43"
+  title: "Heap: Soft/Weak/Phantom References"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["memory", "references"]
+  description: |
+    Demonstrate SoftReference, WeakReference and PhantomReference behavior and ReferenceQueue processing.
+  entry_class: "memory.ReferenceDemo"
+  method_signature: "String referenceBehavior()"
+  test_cases:
+    - args: []
+      expected: "done"
+- id: "44"
+  title: "Memory Leak Patterns in Java"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["memory"]
+  description: |
+    Find and explain common memory leak patterns (listeners, caches, ThreadLocal) and mitigation patterns.
+- id: "45"
+  title: "Garbage Collectors & Tuning (G1)"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["gc"]
+  description: |
+    Run a stress program under different GC flags (`-XX:+UseG1GC`, `-Xmx`) and collect GC logs for analysis.
+- id: "46"
+  title: "JFR (Java Flight Recorder) Basics"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["monitoring", "jfr"]
+  description: |
+    Record a short flight recording and analyze it (events, GC, thread states).
+- id: "47"
+  title: "Profiling with async-profiler and VisualVM"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["profiling"]
+  description: |
+    Profile a CPU-bound program and produce flame graphs; write a short findings report.
+- id: "48"
+  title: "Performance Testing with JMH"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["benchmarking", "jmh"]
+  description: |
+    Write a JMH benchmark for two implementations of a function and compare results.
+  entry_class: "jmh.BenchmarkDemo"
+  method_signature: "boolean runBench()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "49"
+  title: "Native Image (GraalVM) - Hello Native"
+  type: "env"
+  difficulty: "Hard"
+  topics: ["native-image", "graalvm"]
+  description: |
+    Build a native image using GraalVM and measure startup time and footprint; provide build instructions.
+- id: "50"
+  title: "JNI: Call Native Code"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["jni", "native"]
+  description: |
+    Write a tiny JNI bridge that calls a C function returning a string; provide platform instructions.
+  entry_class: "jni.JNIDemo"
+  method_signature: "String callNative()"
+  test_cases:
+    - args: []
+      expected: "native"
+- id: "51"
+  title: "Security: Keystore, SSLContext & TLS"
+  type: "env"
+  difficulty: "Hard"
+  topics: ["security", "ssl"]
+  description: |
+    Create a self-signed keystore, setup SSLContext and create a simple HTTPS server client handshake demo.
+- id: "52"
+  title: "Crypto: Encrypt/Decrypt with JCE"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["crypto"]
+  description: |
+    Implement AES-GCM encryption and decryption and handle secure key storage (Keystore).
+  entry_class: "crypto.AesDemo"
+  method_signature: "boolean roundTrip(byte[] plain)"
+  test_cases:
+    - args: [[1, 2, 3]]
+      expected: true
+- id: "53"
+  title: "ClassPath vs ModulePath"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["modules", "classpath"]
+  description: |
+    Summarize differences between classpath and modulepath and migration strategies.
+- id: "54"
+  title: "ServiceLoader & SPI"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["spi", "service-loader"]
+  description: |
+    Implement a service interface and a provider module, then load via ServiceLoader.
+  entry_class: "spi.ServiceDemo"
+  method_signature: "boolean loadsService()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "55"
+  title: "Resource Loading & ClassLoader Resources"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["resources", "classloader"]
+  description: |
+    Load resources via ClassLoader getResourceAsStream and show fallback behavior across classloaders.
+  entry_class: "res.ResourceLoader"
+  method_signature: "String load(String name)"
+  test_cases:
+    - args: ["data.txt"]
+      expected: "content"
+- id: "56"
+  title: "I18n: ResourceBundle & Locales"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["i18n", "locales"]
+  description: |
+    Create ResourceBundle variants and format dates for different locales.
+  entry_class: "i18n.LocaleDemo"
+  method_signature: "String formatDate(Instant t, String locale)"
+  test_cases:
+    - args: ["2020-01-01T00:00:00Z", "en-US"]
+      expected: "Jan 1, 2020"
+- id: "57"
+  title: "java.time API Mastery"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["time", "datetime"]
+  description: |
+    Parse, convert, and format date/time with timezone conversions and periods/durations.
+  entry_class: "time.TimeUtils"
+  method_signature: "String toUtcIso(String localDateTime, String zone)"
+  test_cases:
+    - args: ["2020-01-01T12:00:00", "Europe/Kigali"]
+      expected: "2020-01-01T09:00:00Z"
+- id: "58"
+  title: "Formatting & NumberFormat"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["formatting"]
+  description: |
+    Use NumberFormat and DecimalFormat for locale-aware formatting and parsing.
+  entry_class: "format.FormatDemo"
+  method_signature: "String formatCurrency(double amount, String locale)"
+  test_cases:
+    - args: [1234.5, "en-US"]
+      expected: "$1,234.50"
+- id: "59"
+  title: "JDBC Connection & Transactions"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["jdbc", "database"]
+  description: |
+    Connect to an in-memory H2 DB, create table, run transaction with rollback/commit.
+  entry_class: "db.JdbcDemo"
+  method_signature: "int insertedRows()"
+  test_cases:
+    - args: []
+      expected: 1
+- id: "60"
+  title: "Connection Pooling & HikariCP"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["database", "hikari"]
+  description: |
+    Configure HikariCP for an in-memory DB and measure connection acquisition latency.
+- id: "61"
+  title: "ORM Basics with JPA (Hibernate)"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["orm", "jpa"]
+  description: |
+    Create a simple JPA entity, persist and query using Hibernate with H2.
+  entry_class: "jpa.JpaDemo"
+  method_signature: "long persistAndCount()"
+  test_cases:
+    - args: []
+      expected: 1
+- id: "62"
+  title: "Transactions: Isolation Levels & Anomalies"
+  type: "design"
+  difficulty: "Hard"
+  topics: ["transactions", "database"]
+  description: |
+    Demonstrate dirty read, non-repeatable read, phantom read across isolation levels.
+- id: "63"
+  title: "Logging: SLF4J + Logback Configuration"
+  type: "env"
+  difficulty: "Easy"
+  topics: ["logging"]
+  description: |
+    Configure Logback with different appenders and rolling policies and show log rotation.
+- id: "64"
+  title: "Metrics: Prometheus Instrumentation"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["monitoring", "metrics"]
+  description: |
+    Instrument a small app with Micrometer and expose Prometheus endpoint; provide curlable metrics.
+- id: "65"
+  title: "Testing: JUnit 5 Advanced Features"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["testing", "junit"]
+  description: |
+    Use parameterized tests, nested tests, dynamic tests, and lifecycle annotations to structure complex test suites.
+  entry_class: "test.AdvancedTests"
+  method_signature: "boolean parameterizedSum(int a, int b)"
+  test_cases:
+    - args: [1, 2]
+      expected: true
+- id: "66"
+  title: "Mocking: Mockito & Best Practices"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["testing", "mocking"]
+  description: |
+    Provide examples and anti-patterns for Mockito usage and verify interaction vs state based testing.
+- id: "67"
+  title: "Integration Testing with Testcontainers"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["testing", "containers"]
+  description: |
+    Use Testcontainers to run an integration test with a real Postgres container.
+- id: "68"
+  title: "Contract Testing with Pact"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["testing", "contract"]
+  description: |
+    Write a consumer-driven contract and show provider verification using Pact.
+- id: "69"
+  title: "Security: Input Validation & OWASP"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["security", "validation"]
+  description: |
+    Provide code examples for input validation and sanitize strings to prevent injection attacks.
+- id: "70"
+  title: "Secure Coding Patterns & Secrets Management"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["security"]
+  description: |
+    Demonstrate secure secret storage using environment variables, Hashicorp Vault (local), or OS keystore.
+- id: "71"
+  title: "Dependency Injection (Manual & Frameworks)"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["di", "design"]
+  description: |
+    Implement constructor-based DI manually and show same pattern with Guice or Spring.
+  entry_class: "di.Demo"
+  method_signature: "String greeter(String name)"
+  test_cases:
+    - args: ["Oli"]
+      expected: "Hello Oli"
+- id: "72"
+  title: "Spring Boot Minimal App + Actuator"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["spring", "actuator"]
+  description: |
+    Create a minimal Spring Boot app with actuator endpoints; show health and metrics endpoints.
+- id: "73"
+  title: "Reactive Streams with Flow API"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["reactive", "flow"]
+  description: |
+    Implement a simple Publisher respecting backpressure and a Subscriber that consumes slowly.
+  entry_class: "reactive.FlowDemo"
+  method_signature: "boolean backpressureWorks()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "74"
+  title: "Reactive with Project Reactor (Flux/Mono)"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["reactor", "reactive"]
+  description: |
+    Use Flux and Mono to compose event streams and handle errors gracefully.
+  entry_class: "reactor.ReactorDemo"
+  method_signature: "List<String> process(List<String> in)"
+  test_cases:
+    - args: [["a", "b"]]
+      expected: ["A", "B"]
+- id: "75"
+  title: "Web Client: java.net.http HttpClient"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["http"]
+  description: |
+    Use java.net.http.HttpClient to perform async requests and handle responses.
+  entry_class: "http.HttpClientDemo"
+  method_signature: "int statusCode(String url)"
+  test_cases:
+    - args: ["https://example.com"]
+      expected: 200
+- id: "76"
+  title: "Embedded Server: Undertow / Jetty"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["web", "server"]
+  description: |
+    Create an embedded Undertow server and deploy a simple handler serving JSON.
+- id: "77"
+  title: "Servlets & Filters Basics"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["servlet"]
+  description: |
+    Build a small servlet and filter chain demonstrating request/response lifecycle.
+  entry_class: "web.ServletDemo"
+  method_signature: "String handle(String path)"
+  test_cases:
+    - args: ["/hello"]
+      expected: "Hello"
+- id: "78"
+  title: "WebSockets: Server & Client"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["websockets", "network"]
+  description: |
+    Implement a WebSocket echo endpoint and a client that verifies messages.
+  entry_class: "websocket.EchoWS"
+  method_signature: "boolean echo(String msg)"
+  test_cases:
+    - args: ["ping"]
+      expected: true
+- id: "79"
+  title: "Reactive Web: Spring WebFlux Basic"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["spring", "reactive"]
+  description: |
+    Create a basic Spring WebFlux route and test reactive endpoints.
+- id: "80"
+  title: "Security: JWT Authentication Flow"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["security", "jwt"]
+  description: |
+    Implement JWT generation and verification for stateless authentication demo.
+  entry_class: "security.JwtDemo"
+  method_signature: "boolean verifyToken(String payload)"
+  test_cases:
+    - args: ["user1"]
+      expected: true
+- id: "81"
+  title: "Build Plugin: Simple Maven Plugin"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["maven", "plugins"]
+  description: |
+    Implement a simple Maven plugin that scans sources and generates a report.
+  entry_class: "plugin.MavenReport"
+  method_signature: "boolean generate(String base)"
+  test_cases:
+    - args: ["."]
+      expected: true
+- id: "82"
+  title: "Gradle: Kotlin DSL and Multi-Project"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["gradle"]
+  description: |
+    Create a multi-project build using Gradle Kotlin DSL and show how to share versions and dependencies.
+- id: "83"
+  title: "Packaging: Fat JARs vs Modular JARs"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["packaging", "jars"]
+  description: |
+    Compare uber-jars, modular jars, and native images; provide pros/cons for deployment.
+- id: "84"
+  title: "Dockerize a Java App"
+  type: "env"
+  difficulty: "Easy"
+  topics: ["docker", "devops"]
+  description: |
+    Containerize a simple Java app and demonstrate multi-stage Dockerfile for small images.
+- id: "85"
+  title: "Health Checks & Readiness Probes"
+  type: "env"
+  difficulty: "Easy"
+  topics: ["k8s", "ops"]
+  description: |
+    Add /health and /ready endpoints and demonstrate curl checks and container health status.
+- id: "86"
+  title: "Observability: Structured Logging & Tracing"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["observability", "tracing"]
+  description: |
+    Add tracing (OpenTelemetry) to a simple app and emit trace context through logs.
+- id: "87"
+  title: "Hot Reload & Dev Productivity (spring-devtools)"
+  type: "env"
+  difficulty: "Easy"
+  topics: ["devtools"]
+  description: |
+    Configure fast reload for local development and measure iteration times.
+- id: "88"
+  title: "Error Handling & Exception Mapping in Web Apps"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["web", "exceptions"]
+  description: |
+    Implement exception mappers to convert exceptions to JSON error responses.
+  entry_class: "web.ErrorMapper"
+  method_signature: "String map(Exception e)"
+  test_cases:
+    - args: ["java.lang.IllegalArgumentException"]
+      expected: "BAD_REQUEST"
+- id: "89"
+  title: "Rate Limiting & Circuit Breakers"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["resilience"]
+  description: |
+    Implement a rate limiter and circuit breaker (conceptual & simple code), compare with Resilience4j.
+- id: "90"
+  title: "Backends: Reactive vs Thread-per-Request Tradeoffs"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["architecture"]
+  description: |
+    Write a comparison document with sample code showing resource consumption differences.
+- id: "91"
+  title: "Logging MDC & Correlation IDs"
+  type: "code"
+  difficulty: "Medium"
+  topics: ["logging"]
+  description: |
+    Add MDC correlation ids to requests and ensure logs include the id across threads/executors.
+  entry_class: "logging.MdcDemo"
+  method_signature: "String process(String id)"
+  test_cases:
+    - args: ["cid"]
+      expected: "ok"
+- id: "92"
+  title: "Static Analysis: SpotBugs & Error Prone"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["static-analysis"]
+  description: |
+    Run SpotBugs and ErrorProne and fix two high-priority warnings.
+- id: "93"
+  title: "Dependency Management & BOM"
+  type: "design"
+  difficulty: "Easy"
+  topics: ["dependencies"]
+  description: |
+    Use a Bill of Materials (BOM) to manage versions across multi-module projects.
+- id: "94"
+  title: "Code Coverage & Mutation Testing"
+  type: "env"
+  difficulty: "Medium"
+  topics: ["testing", "coverage"]
+  description: |
+    Add JaCoCo and Pitest to the repository and report mutation score and coverage.
+- id: "95"
+  title: "Secure Class Loading & Code Signing"
+  type: "design"
+  difficulty: "Hard"
+  topics: ["security", "classloading"]
+  description: |
+    Discuss code signing and class loading security constraints and demonstrate verifying signed jars.
+- id: "96"
+  title: "Byte Buddy: Runtime Proxies & Instrumentation"
+  type: "code"
+  difficulty: "Hard"
+  topics: ["byte-buddy", "instrumentation"]
+  description: |
+    Use Byte Buddy to create a runtime proxy that intercepts method calls and logs arguments.
+  entry_class: "bytebuddy.ProxyDemo"
+  method_signature: "boolean intercepts()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "97"
+  title: "Service Mesh & Java Apps (concept)"
+  type: "design"
+  difficulty: "Medium"
+  topics: ["architecture", "service-mesh"]
+  description: |
+    Explain how a service mesh (e.g., Istio) impacts Java app design (TLS, retries, observability).
+- id: "98"
+  title: "Graceful Shutdown & JVM Hooks"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["ops", "shutdown"]
+  description: |
+    Implement shutdown hooks and graceful termination for background workers.
+  entry_class: "ops.ShutdownDemo"
+  method_signature: "boolean gracefulStop()"
+  test_cases:
+    - args: []
+      expected: true
+- id: "99"
+  title: "Build a Small CLI with Picocli"
+  type: "code"
+  difficulty: "Easy"
+  topics: ["cli"]
+  description: |
+    Build a CLI app using Picocli with subcommands and unit tests for argument parsing.
+  entry_class: "cli.PicoDemo"
+  method_signature: "String run(String[] args)"
+  test_cases:
+    - args: [["--help"]]
+      expected: "Usage"
+- id: "100"
+  title: "Final Project: Design & Deliver a Production-Ready Microservice"
+  type: "design"
+  difficulty: "Hard"
+  topics: ["architecture", "microservices"]
+  description: |
+    Combine multiple concepts: build a small microservice with CI, tests, metrics, health checks, Docker image, and documentation. Provide a checklist and a short demo script.
