@@ -253,7 +253,7 @@ def main():
         print("Install PyYAML: pip install pyyaml")
         sys.exit(1)
 
-    srcy = Path("exercises.yml")
+    srcy = Path(".", "exercises.yml")
     if not srcy.exists():
         print("exercises.yml not found in current directory. Create it first.")
         sys.exit(1)
