@@ -169,22 +169,9 @@ If you’d like, I can create a ready-to-commit `.github/workflows/ci.yml` file 
 
 This repository is intended to be open and permissive. Recommended defaults:
 
-- License: **MIT** (replace with your preferred license).
-- Code of Conduct: adopt Contributor Covenant (link in repo).
-
-If you want, I can add `LICENSE` (MIT template) and a `CODE_OF_CONDUCT.md` file for you.
-
----
+- License: Read the `licence.md` for reference
 
 # Contact & support
 
 - Open an issue on this repo with questions, suggestions or errors in exercises.
 - When opening issues/PRs, please include: exercise id, a short description of the problem, and reproduction steps (if any).
-
-If you want, I can produce:
-
-- a ready-to-commit GitHub Actions CI file,
-- a CONTRIBUTING.md template, and/or
-- a starter `solutions/` branch with example solutions for the first 10 modules.
-
-Tell me which of those you want next and I’ll generate them right away.
